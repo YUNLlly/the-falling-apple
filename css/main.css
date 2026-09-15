@@ -163,18 +163,18 @@ button { font-family: inherit; color: inherit; background: none; border: none; c
   display: block;
   filter: drop-shadow(4px 6px 0 rgba(30,24,18,0.06));
 }
-/* 真实树干无缝纵向无限延伸 */
+/* 真实树干无缝纵向无限延伸（bottom:0 直达页底，由树根图覆盖衔接处，避免中段缺失） */
 .tree-spine-trunk {
-  position: absolute;
-  top: clamp(700px, 54vw, 980px);
-  bottom: clamp(380px, 28vw, 540px);
-  left: 0;
-  width: 100%;
-  background-image: url('../assets/img/tree/tree-trunk-seamless.png');
-  background-repeat: repeat-y;
-  background-position: center top;
-  background-size: 100% auto;
-  z-index: 1;
+position: absolute;
+top: clamp(700px, 54vw, 980px);
+bottom: 0;
+left: 0;
+width: 100%;
+background-image: url('../assets/img/tree/tree-trunk-seamless.png');
+background-repeat: repeat-y;
+background-position: center top;
+background-size: 100% auto;
+z-index: 1;
 }
 .tree-spine-roots {
   position: absolute;
@@ -192,6 +192,8 @@ button { font-family: inherit; color: inherit; background: none; border: none; c
   display: flex;
   align-items: center;
 }
+/* 文字整体右移，避开左侧树冠 */
+.act-hero .hero-content { margin-left: clamp(100px, 9vw, 200px); }
 .hero-content {
   max-width: 660px;
   position: relative;
@@ -220,11 +222,7 @@ button { font-family: inherit; color: inherit; background: none; border: none; c
   line-height: 1.9;
 }
 .lead-pivot {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--apple);
-  display: inline-block;
-  margin-top: 4px;
+  display: none; /* 引导句已删除，样式保留备用 */
 }
 .scroll-cue {
   display: flex;
@@ -277,12 +275,13 @@ button { font-family: inherit; color: inherit; background: none; border: none; c
 }
 .hangtag-photo { position: relative; margin-bottom: 16px; }
 .hangtag-photo img {
-  width: 100%;
-  aspect-ratio: 4 / 4.4;
-  object-fit: cover;
-  border: 2px solid var(--ink);
-  border-radius: 3px;
-  filter: saturate(.88);
+width: 100%;
+aspect-ratio: 3 / 4;
+object-fit: cover;
+object-position: center;
+border: 2px solid var(--ink);
+border-radius: 3px;
+filter: saturate(.88);
 }
 .photo-tape {
   position: absolute;
@@ -323,12 +322,19 @@ button { font-family: inherit; color: inherit; background: none; border: none; c
   padding: 0 4px;
 }
 .narrative-p {
-  font-size: clamp(14.5px, 1.1vw, 15.5px);
-  line-height: 1.85;
-  color: var(--ink);
-  margin-bottom: 16px;
-  font-weight: 500;
+font-size: clamp(14.5px, 1.1vw, 15.5px);
+line-height: 1.85;
+color: var(--ink);
+margin-bottom: 16px;
+font-weight: 500;
 }
+/* 带红点的矛盾点段落：红点悬挂左侧，换行文字对齐 */
+.narrative-p.with-dot {
+display: flex;
+gap: 10px;
+align-items: baseline;
+}
+.narrative-p .red-dot { transform: translateY(-1px); }
 .narrative-conclusion {
   margin-bottom: 0;
   margin-top: 20px;
@@ -1435,18 +1441,17 @@ display: none;
 
 /* ---------- 第四幕 · 兴趣爱好 ---------- */
 .life-group { margin-bottom: 10vh; }
-.life-branch-head { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
-.branch-icon-badge {
-  font-size: 22px;
-  width: 44px; height: 44px;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--bg-card);
-  border: 2px solid var(--ink);
-  border-radius: 50%;
-  box-shadow: 2px 3px 0 var(--shadow);
+.life-branch-head { margin-bottom: 22px; }
+.life-branch-head h3 {
+  font-size: 23px;
+  font-weight: 800;
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 8px;
+  background: linear-gradient(120deg, rgba(217, 146, 134, .28), rgba(169, 68, 56, .16));
+  box-shadow: inset 0 0 0 1px rgba(169, 68, 56, .18);
+  transform: rotate(-0.4deg);
 }
-.life-branch-head h3 { font-size: 23px; font-weight: 800; }
-.life-quote { font-size: 14px; color: var(--ink-soft); }
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -1633,7 +1638,13 @@ z-index: 2;
 .basket-tag em { display: block; font-style: normal; font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
 
 /* ---------- 第六幕 · 树根草坪 & 树下女孩（坐在树下读书，无白框） ---------- */
-.act-lawn { padding-bottom: 4vh; position: relative; }
+.act-lawn {
+  padding-top: 6vh; /* 标题再上移 */
+  padding-bottom: 4vh;
+  position: relative;
+}
+/* 标题与草坪拉开足够间距，确保悬浮气泡（头顶上方约94px）不会碰到标题 */
+.act-lawn .act-head { margin-bottom: 13vh; }
 .act-lawn::after {
   content: "";
   position: absolute;
@@ -1644,13 +1655,26 @@ z-index: 2;
   pointer-events: none;
   z-index: 0;
 }
-.lawn-stage { position: relative; z-index: 2; }
+.lawn-stage {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 4vw;
+  flex-wrap: nowrap; /* 强制单行：女孩居左、联系卡居右 */
+}
 .tree-under-girl-area {
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
-  margin-bottom: 6vh;
+  margin-bottom: 0;
   position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  /* 女孩整体左移，坐在树干右侧的草坪上 */
+  margin-left: clamp(-240px, -14vw, -120px);
+  padding-left: 0;
 }
 /* 女孩独立容器：直接坐在草地树根旁，无任何白框包裹 */
 .girl-interactive-wrapper {
@@ -1660,11 +1684,11 @@ z-index: 2;
   transition: transform .3s var(--spring);
 }
 .girl-standalone-img {
-  width: min(460px, 72vw);
-  height: auto;
-  display: block;
-  filter: drop-shadow(4px 6px 0 rgba(30,24,18,0.06));
-  transition: transform .25s ease;
+width: min(460px, 36vw);
+height: auto;
+display: block;
+filter: drop-shadow(4px 6px 0 rgba(30,24,18,0.06));
+transition: transform .25s ease;
 }
 .girl-interactive-wrapper:hover .girl-standalone-img {
   transform: scale(1.02) rotate(-1deg);
@@ -1674,8 +1698,9 @@ z-index: 2;
 }
 .quote-bubble {
   position: absolute;
-  top: -20px;
-  right: -30px;
+  top: -88px;
+  left: -8px;
+  right: auto;
   padding: 14px 20px;
   font-size: 14.5px;
   font-weight: 700;
@@ -1699,27 +1724,8 @@ z-index: 2;
 }
 .particle.is-apple { border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; background: var(--apple); border: 2px solid var(--ink); }
 
-.career-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 6vh;
-}
-.career-card { padding: 22px 24px; }
-.career-k {
-  display: inline-block;
-  font-family: var(--font-en);
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--apple);
-  margin-bottom: 10px;
-}
-.claim-line { font-size: 24px; font-weight: 900; line-height: 1.45; }
-
 /* ---------- 联系方式 & 页脚 ---------- */
-.contact-card { max-width: 580px; margin-top: 8vh; padding: 30px 34px; position: relative; z-index: 2; }
+.contact-card { max-width: 580px; margin-top: 0; margin-bottom: 8px; padding: 30px 34px; position: relative; z-index: 2; flex: 0 1 580px; }
 .contact-card h3 { font-size: 28px; font-weight: 800; margin-bottom: 20px; }
 .contact-rows { display: flex; flex-direction: column; gap: 12px; }
 .contact-btn {
@@ -1834,9 +1840,14 @@ z-index: 2;
   .score-grid { grid-template-columns: repeat(2, 1fr); }
   .campus-item { flex-direction: column; gap: 2px; }
   .cici-tab-bar { gap: 12px; overflow-x: auto; }
-  .cici-tab-btn { padding: 10px 12px 14px; }
-  .career-cards { grid-template-columns: 1fr; }
-  #altimeter { top: auto; bottom: 20px; right: 16px; }
+.cici-tab-btn { padding: 10px 12px 14px; }
+#altimeter { top: auto; bottom: 20px; right: 16px; }
+.lawn-stage { flex-wrap: wrap; }
+.act-lawn .act-head { margin-bottom: 8vh; }
+.act-hero .hero-content { margin-left: clamp(70px, 12vw, 130px); }
+.tree-under-girl-area { margin-left: 0; }
+.girl-standalone-img { width: min(460px, 72vw); }
+.contact-card { flex: 1 1 100%; max-width: 100%; }
   .alt-dots { flex-direction: row; margin-top: 6px; }
   .basket-row { gap: 24px; }
   .basket { width: calc(50% - 12px); }

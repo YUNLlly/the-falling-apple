@@ -118,20 +118,12 @@
   window.addEventListener("scroll", updateAltimeter, { passive: true });
   dots.forEach((d) => d.addEventListener("click", (e) => { e.preventDefault(); scrollTo("#" + d.dataset.act); }));
 
-  /* ============ 反重力彩蛋（向上滚动吐槽） ============ */
-  const QUIPS = [
-    "是反重力！牛顿要被气醒了",
-    "苹果表示：我不上来",
-    "熟透的苹果不回头",
-    "地心引力：你们礼貌吗",
-    "往上滚是要去哪？树冠的苹果还没熟",
-    "牛顿：我看的明明是往下掉的那个",
-    "万有引力表示管不了这一段",
-    "别卷了，先落个地",
-    "你以为你在往上，其实苹果在往下",
-    "回树冠的话，记得挑一颗熟的"
-  ];
-  let lastY = window.scrollY, lastBubbleAt = 0, quipIdx = Math.floor(Math.random() * QUIPS.length);
+/* ============ 反重力彩蛋（向上滚动吐槽，随机出现） ============ */
+const QUIPS = [
+"是反重力！牛顿要被气醒了",
+"地心引力：你们礼貌吗"
+];
+let lastY = window.scrollY, lastBubbleAt = 0;
   window.addEventListener("scroll", () => {
     const y = window.scrollY;
     const goingUp = y < lastY - 45;
@@ -142,7 +134,7 @@
     lastBubbleAt = now;
     const b = document.createElement("div");
     b.className = "ag-bubble hand-card";
-    b.textContent = QUIPS[quipIdx++ % QUIPS.length];
+    b.textContent = QUIPS[Math.floor(Math.random() * QUIPS.length)];
     b.style.left = 18 + Math.random() * 55 + "vw";
     b.style.top = 22 + Math.random() * 45 + "vh";
     $("#bubble-layer").appendChild(b);
@@ -236,22 +228,27 @@
 
   girlZone?.addEventListener("click", triggerGirlHit);
 
-  /* ============ 邮箱一键复制 ============ */
-  $("#copy-email")?.addEventListener("click", async function () {
-    const email = this.dataset.email;
-    try {
-      await navigator.clipboard.writeText(email);
-    } catch {
-      const ta = document.createElement("textarea");
-      ta.value = email; document.body.appendChild(ta); ta.select();
-      document.execCommand("copy"); ta.remove();
-    }
-    const toast = $("#toast");
-    toast.hidden = false;
-    toast.classList.add("show");
-    clearTimeout(toast._t);
-    toast._t = setTimeout(() => { toast.classList.remove("show"); toast.hidden = true; }, 1800);
-  });
+  /* ============ 联系方式一键复制（邮箱 / 微信号） ============ */
+  const bindCopy = (sel, toastText) => {
+    $(sel)?.addEventListener("click", async function () {
+      const text = Object.values(this.dataset)[0];
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const ta = document.createElement("textarea");
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        document.execCommand("copy"); ta.remove();
+      }
+      const toast = $("#toast");
+      toast.textContent = toastText;
+      toast.hidden = false;
+      toast.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => { toast.classList.remove("show"); toast.hidden = true; }, 1800);
+    });
+  };
+  bindCopy("#copy-email", "邮箱已复制 ✓");
+  bindCopy("#copy-wechat", "微信号已复制 ✓");
 
   /* ============ 回到顶部 ============ */
   $("#back-to-crown")?.addEventListener("click", () => scrollTo("#act1"));
@@ -286,6 +283,37 @@
 
     if (!deckTrack) return;
 
+    /* ---- Supabase 云端共享：访客心法全员可见 ---- */
+    const SB_URL = "https://urhbxlrabjvsyesdqmse.supabase.co";
+    const SB_KEY = "sb_publishable__pY87xPS68T7oYQaB24nsQ_TguDNPBI";
+    const sb = (window.supabase && window.supabase.createClient)
+      ? window.supabase.createClient(SB_URL, SB_KEY) : null;
+    let cloudGuests = null; // null=尚未加载完成，数组=已加载
+
+    // 从云端拉取所有访客心法（失败时降级用本地缓存，不阻塞首屏）
+    const loadCloudMindsets = async () => {
+      if (!sb) return;
+      try {
+        const { data, error } = await sb.from("mindsets")
+          .select("id,content,author,created_at")
+          .eq("type", "guest").eq("status", "approved")
+          .order("created_at", { ascending: true });
+        if (error) throw error;
+        cloudGuests = (data || []).map((r) => ({
+          id: r.id,
+          text: r.content,
+          author: r.author || "神秘访客",
+          time: r.created_at ? new Date(r.created_at).getTime() : Date.now()
+        }));
+        localStorage.setItem("yiyang_cloud_guest_cache", JSON.stringify(cloudGuests));
+      } catch (e) {
+        console.warn("云端心法拉取失败，降级用本地缓存：", e.message);
+        try { cloudGuests = JSON.parse(localStorage.getItem("yiyang_cloud_guest_cache") || "[]"); }
+        catch { cloudGuests = []; }
+      }
+      refreshMindsetViews();
+    };
+
     // 本人核心心法（可编辑内容）
     const CORE_MINDSETS_DATA = [
       { id: "core-1", type: "owner", fullWidth: false, html: '在变化的时代，基于历史经验的规划像是在用<mark>后视镜开车</mark>。' },
@@ -315,9 +343,26 @@
     const saveGuestMindset = (text, author) => {
       const list = getSavedGuestMindsets();
       const id = "guest-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
-      list.push({ id, text, author: author || "神秘访客", time: Date.now() });
+      const authorName = author || "神秘访客";
+      list.push({ id, text, author: authorName, time: Date.now() });
       localStorage.setItem("yiyang_guest_mindsets", JSON.stringify(list));
+      // 同步写入云端（所有访客共享）；失败不影响本机体验
+      if (sb) {
+        sb.from("mindsets").insert({
+          id, type: "guest", content: text, author: authorName, status: "approved"
+        }).then(({ error }) => {
+          if (error) console.warn("云端保存失败，本条仅本机可见：", error.message);
+          else if (cloudGuests) cloudGuests.push({ id, text, author: authorName, time: Date.now() });
+        });
+      }
       return list;
+    };
+
+    // 访客心法数据源：云端已加载 → 云端 + 本机未同步成功的合并；否则用本地
+    const getGuestSource = () => {
+      if (cloudGuests === null) return getSavedGuestMindsets();
+      const localOnly = getSavedGuestMindsets().filter(l => !cloudGuests.some(c => c.id === l.id));
+      return [...localOnly, ...cloudGuests];
     };
 
     // 合并所有心法为统一列表
@@ -337,7 +382,7 @@
           };
         });
 
-      const guestList = getSavedGuestMindsets()
+      const guestList = getGuestSource()
         .filter(g => !overrides[g.id + "_deleted"])
         .map((g, i) => {
           const ov = overrides[g.id];
@@ -566,11 +611,13 @@
       if (modalAuthor) modalAuthor.value = "";
     };
 
-    // 删除心法
+    // 删除心法（云端同步删除；匿名无删除权限时仅本页隐藏，可在 Supabase 后台彻底删除）
     const deleteMindset = (id) => {
       const overrides = getMindsetOverrides();
       overrides[id + "_deleted"] = true;
       saveMindsetOverrides(overrides);
+      if (sb) sb.from("mindsets").delete().eq("id", id)
+        .then(({ error }) => { if (error) console.warn("云端删除受限（已仅本页隐藏）：", error.message); });
 
       refreshMindsetViews();
 
@@ -894,6 +941,7 @@
     // 初始化：动态渲染轮盘卡片后启动弧形布局
     renderDeckCards();
     updateDeck(false);
+    loadCloudMindsets(); // 异步拉取云端共享心法，加载完后刷新轮盘
     window.updateMindsetDeck = () => updateDeck(false);
     window.addEventListener("resize", () => updateDeck(false));
   };
