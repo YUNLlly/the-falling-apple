@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>李依阳 · 一颗苹果的顿悟 The Falling Apple</title>
+<meta name="description" content="李依阳的个人网站——一颗苹果的顿悟。产品经理 / AI 造物者 / 生活记录者。" />
+<link rel="icon" href="assets/img/apple-cursor.png" />
+<link rel="stylesheet" href="css/main.css?v=2.6" />
+</head>
+<body class="no-cursor-native">
+
+<!-- ================= 自定义苹果光标 ================= -->
+<div id="cursor" aria-hidden="true">
+  <img src="assets/img/apple-cursor.png" alt="" class="cursor-apple-img" />
+  <span class="cursor-label"></span>
+</div>
+
+<!-- ================= 高度计导航 ================= -->
+<aside id="altimeter" aria-label="坠落高度导航">
+  <div class="alt-readout"><span id="alt-value">8.0</span><i>m</i></div>
+  <div class="alt-dots">
+    <a href="#act1" data-act="act1" title="树冠 · 序篇"></a>
+    <a href="#act2" data-act="act2" title="枝头 · 自我介绍"></a>
+    <a href="#act3" data-act="act3" title="成熟 · 履历档案"></a>
+<a href="#act4" data-act="act4" title="枝桠 · 兴趣爱好"></a>
+<a href="#act5" data-act="act5" title="草坪 · 灵感顿悟"></a>
+  </div>
+</aside>
+
+<!-- ================= 贯穿全页的真实手绘苹果树 ================= -->
+<div class="tree-spine" aria-hidden="true">
+  <!-- 顶部：真实手绘完整大树冠（放大、左移、露出约2/3） -->
+  <div class="tree-spine-crown">
+    <img src="assets/img/tree/tree-top-crown.png" alt="" class="tree-crown-img" />
+  </div>
+  <!-- 中段：真实素材树干无缝纵向无限延伸 -->
+  <div class="tree-spine-trunk"></div>
+  <!-- 底部：真实手绘树根与草地 -->
+  <div class="tree-spine-roots">
+    <img src="assets/img/tree/tree-bottom-roots.png" alt="" class="tree-roots-img" />
+  </div>
+</div>
+
+<!-- ================= 主内容长卷 ================= -->
+<main id="story">
+
+  <!-- ================= 第一幕 · 首屏树冠 ================= -->
+  <section id="act1" class="act act-hero">
+    <div class="hero-content">
+      <p class="eyebrow">A PERSONAL WEBSITE OF LI YIYANG</p>
+      <h1 class="hero-title">一颗苹果<br><span class="accent">的顿悟</span></h1>
+      <p class="hero-en">The Falling Apple</p>
+      
+      <div class="hero-lead">
+        <p class="lead-quote">
+          在伊甸园，它是知识与试探，人类为它交出了永恒的春天；在牛顿的午后，它是灵光一现的偶然，砸出了一个时代的秩序；在加缪笔下，第二颗苹果随即飞来，而世界冷漠如常。<br><br>
+          千万个人仰望同一棵树，读出千万种意义。<br><br>
+          <span class="lead-pivot">而我...</span>
+        </p>
+      </div>
+
+      <div class="scroll-cue">
+        <span class="cue-mouse"><span class="cue-wheel"></span></span>
+        <span class="cue-txt">下滑，看看万有引力带你去哪</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 第二幕 · 自我介绍 ================= -->
+  <section id="act2" class="act act-about">
+    <header class="act-head">
+      <p class="eyebrow">WHO AM I</p>
+      <h2 class="act-title"><span class="accent">品种标签卡</span></h2>
+    </header>
+
+    <div class="about-grid">
+      <!-- 麻绳吊牌（位于中间偏左） -->
+      <div class="hangtag sway" id="hangtag">
+        <svg class="rope" viewBox="0 0 40 70" aria-hidden="true">
+          <path d="M20 0 C18 20 22 40 20 68" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <div class="hangtag-card hand-card">
+          <div class="hangtag-photo">
+            <img src="assets/img/about/li-yiyang.jpg" alt="李依阳" loading="lazy" />
+            <span class="photo-tape"></span>
+          </div>
+          <dl class="varieties">
+            <div><dt>品名</dt><dd>李依阳（Evelyn）</dd></div>
+            <div><dt>学名</dt><dd>产品经理（养成款）</dd></div>
+            <div><dt>产地</dt><dd>新疆乌鲁木齐 ✖️ 重庆</dd></div>
+            <div><dt>营养液</dt><dd>摄影 / 主持 / 旅行</dd></div>
+            <div><dt>现种植于</dt><dd>成都 · 四川大学电子信息学院</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <!-- 右侧具体自我描述（偏中间位置） -->
+      <div class="about-statement">
+        <div class="statement-narrative reveal">
+          <p class="narrative-greeting">Hi，我是李依阳，可以叫我<strong>李小晕</strong>。</p>
+          <p class="narrative-p">我是一个矛盾的人：我喜欢所有事物都井井有条，也希望会有新鲜的灵感砸中我、新奇的大门邀请我，让我的生活多一些可能；</p>
+          <p class="narrative-p">我是一个平和友善的人，乐于帮助他人、共情他人，但也会因为有人在我赶地铁时挡住左边扶梯而愤怒；</p>
+          <p class="narrative-p">我是一个悲观主义者，我总是不相信自己能够在秋季硕果累累，但我也相信西西弗斯是快乐的。</p>
+          <p class="narrative-p narrative-conclusion">Anyway，人心是复杂的，同时我永远是真实的，所以我制作这样的个人网站，以此获得一些世俗的成功。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 第三幕 · 苹果的成熟（Tab 切换排版） ================= -->
+  <section id="act3" class="act act-capabilities">
+    <header class="act-head">
+      <p class="eyebrow">MATURATION PROCESS. / 第三幕</p>
+      <h2 class="act-title">一颗苹果的成熟，<span class="accent">需要...</span></h2>
+    </header>
+
+    <div class="capabilities-container">
+      <!-- Tab 栏导航 -->
+      <nav class="cici-tab-bar" aria-label="能力档案切换">
+        <button class="cici-tab-btn active" data-tab="tab-education" type="button">
+          <span class="tab-idx">01</span>
+          <span class="tab-label">教育经历 ✖️ 技能</span>
+        </button>
+        <button class="cici-tab-btn" data-tab="tab-internship" type="button">
+          <span class="tab-idx">02</span>
+          <span class="tab-label">实习经历</span>
+        </button>
+        <button class="cici-tab-btn" data-tab="tab-awards" type="button">
+          <span class="tab-idx">03</span>
+          <span class="tab-label">荣誉奖项</span>
+        </button>
+      </nav>
+
+      <!-- Tab 面板内容容器 -->
+      <div class="cici-tab-panels">
+
+        <!-- ================= 面板 1：教育经历 + 技能 ================= -->
+        <div class="cici-panel active" id="tab-education">
+          <!-- 教育背景与学业成绩 -->
+          <div class="cici-row">
+            <div class="cici-time">
+              <span class="time-range">2023.09 —<br>2027.06</span>
+            </div>
+            <div class="cici-body">
+              <!-- 大字号黑色学院名称 + 小字号灰色专业（统一容器样式） -->
+              <div class="edu-header-block">
+                <h3 class="edu-title">四川大学电子信息学院</h3>
+                <p class="edu-subtitle">电子信息工程专业</p>
+              </div>
+
+              <!-- 学业成绩：4 个小方块 -->
+              <div class="score-grid">
+                <div class="score-card hand-card">
+                  <span class="score-k">GPA</span>
+                  <span class="score-v">3.73 / 4.0</span>
+                </div>
+                <div class="score-card hand-card">
+                  <span class="score-k">专业排名</span>
+                  <span class="score-v">前 35%</span>
+                </div>
+                <div class="score-card hand-card">
+                  <span class="score-k">专业课均分</span>
+                  <span class="score-v">90.29</span>
+                </div>
+                <div class="score-card hand-card">
+                  <span class="score-k">英语能力</span>
+                  <span class="score-v">CET-6</span>
+                </div>
+              </div>
+
+              <!-- 学业心得文案 -->
+              <div class="score-insight">
+                <p>理工科给我的底色，是对数据的敏感——把抽象的业务翻译成具体的公式，再层层下钻，直到看见问题的底层结构。</p>
+              </div>
+
+              <!-- 校园经历板块（与上方完全一致的统一容器与排版样式） -->
+              <div class="campus-experience-area">
+                <div class="edu-header-block">
+                  <h3 class="edu-title">校园经历</h3>
+                  <p class="edu-subtitle">课堂之外，潜入我的兴趣爱好</p>
+                </div>
+                <div class="campus-list">
+                  <div class="campus-item">
+                    <span class="red-dot" aria-hidden="true"></span>
+                    <span class="campus-role">团支部书记</span>
+                    <span class="campus-desc">带领支部获得「五四红旗团支部」，个人获评校级优秀共青团干部；</span>
+                  </div>
+                  <div class="campus-item">
+                    <span class="red-dot" aria-hidden="true"></span>
+                    <span class="campus-role">民谣社活动部副部长</span>
+                    <span class="campus-desc">策划路演「白石桥的夜」、零基础乐器教学「LALACLASS」；</span>
+                  </div>
+                  <div class="campus-item">
+                    <span class="red-dot" aria-hidden="true"></span>
+                    <span class="campus-role">四川大学主持人才库</span>
+                    <span class="campus-desc">主持校内晚会、比赛等活动；</span>
+                  </div>
+                  <div class="campus-item">
+                    <span class="red-dot" aria-hidden="true"></span>
+                    <span class="campus-role">记者团</span>
+                    <span class="campus-desc">校园摄影与人物采写。</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 产品心法与技能 -->
+          <div class="cici-row">
+            <div class="cici-time">
+              <span class="time-range">MINDSET<br>&amp; SKILLS</span>
+            </div>
+            <div class="cici-body">
+              <!-- 大字号标题：产品心法与技能（无副标题） -->
+              <div class="edu-header-block" style="margin-bottom: 24px;">
+                <h3 class="edu-title">产品心法与技能</h3>
+              </div>
+
+              <!-- 第一部分与第二部分：编程基础 & AI能力 (双栏便签卡片，居上排版) -->
+              <div class="skills-tech-grid">
+                <!-- (1) 编程基础 -->
+                <div class="skill-modern-card hand-card">
+                  <div class="skill-card-top">
+                    <span class="skill-icon-pill">💻 编程基础</span>
+                  </div>
+                  <p class="skill-card-text">掌握 <strong>C++、Python、SQL</strong> 基础语言，具备良好的数据敏感度与逻辑思维能力。</p>
+                </div>
+
+                <!-- (2) AI能力 -->
+                <div class="skill-modern-card hand-card">
+                  <div class="skill-card-top">
+                    <span class="skill-icon-pill">🤖 AI 能力</span>
+                  </div>
+                  <p class="skill-card-text">熟练使用 <strong>CatPaw、Claude Code、Cursor</strong> 等 coding 工具搭建个人网站、创建 skill，使用 AI 工具提效；关注 AI 动态，掌握 <strong>RAG、Workflow</strong> 的搭建。</p>
+                </div>
+              </div>
+
+              <!-- 第三部分：产品心法 (弧形轮播 ✖️ 访客共创 ✖️ 主人管理 ✖️ 释放平铺) -->
+              <div class="mindset-section-area" id="mindset-master-area">
+                <div class="mindset-sec-head">
+                  <div class="mindset-head-left">
+                    <span class="mindset-badge">✦ PRODUCT PHILOSOPHY</span>
+                    <h4 class="mindset-main-title">产品心法</h4>
+                  </div>
+                  <div class="mindset-head-actions">
+                    <!-- 管理模式切换按钮 -->
+                    <button type="button" class="mindset-mode-btn" id="btn-toggle-owner-mode" title="开启/关闭心法编辑删除权限">
+                      <span class="mode-icon">✏️</span>
+                      <span class="mode-text">管理模式</span>
+                    </button>
+                    <!-- 轮盘与平铺视图切换按钮 -->
+                    <button type="button" class="mindset-mode-btn" id="btn-toggle-mindset-view" title="切换排版视图" data-mode="deck">
+                      <span class="mode-icon">⊞</span>
+                      <span class="mode-text">平铺便签墙</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- ================= 模式 1：弧形卡牌轮播器 ================= -->
+                <div class="mindset-deck-wrapper" id="mindset-deck-wrap">
+                  <div class="mindset-deck-track" id="mindset-deck-track">
+                    <!-- 将由 JS 动态装载本人心法 + 访客心法 + 共创卡片 -->
+                  </div>
+
+                  <!-- 轮播导航控制栏 -->
+                  <div class="deck-controls">
+                    <button type="button" class="deck-arrow deck-prev" id="btn-deck-prev" aria-label="上一条心法">←</button>
+                    <div class="deck-dots" id="deck-dots-container"></div>
+                    <button type="button" class="deck-arrow deck-next" id="btn-deck-next" aria-label="下一条心法">→</button>
+                  </div>
+                  <div class="deck-swipe-hint">
+                    <span>左右滑动或拨动轮盘 · 释放后将在轮盘中与大家相聚 ✦</span>
+                  </div>
+                </div>
+
+                <!-- ================= 模式 2：释放平铺后的全景便签墙 ================= -->
+                <div class="mindset-wall-wrapper" id="mindset-wall-wrap" style="display: none;">
+                  <div class="mindset-wall-grid" id="mindset-wall-grid">
+                    <!-- 将由 JS 动态渲染全部心法 -->
+                  </div>
+                  <div class="wall-footer-actions">
+                    <button type="button" class="btn-back-to-deck" id="btn-collapse-to-deck">
+                      <span>↺ 收拢为弧形轮盘</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- 心法在线编辑弹窗 Modal -->
+              <div id="mindset-edit-modal" class="mindset-modal-backdrop" hidden>
+                <div class="mindset-modal-card hand-card">
+                  <div class="modal-head">
+                    <h4>✏️ 编辑产品心法</h4>
+                    <button type="button" class="modal-close" id="btn-close-edit-modal">×</button>
+                  </div>
+                  <div class="modal-body">
+                    <label class="modal-label">心法正文内容：</label>
+                    <textarea id="modal-edit-content" class="modal-textarea" rows="4"></textarea>
+                    <div id="modal-author-row" class="modal-author-row">
+                      <label class="modal-label">署名作者：</label>
+                      <input type="text" id="modal-edit-author" class="modal-input" placeholder="署名" />
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn-modal-cancel" id="btn-cancel-edit-modal">取消</button>
+                    <button type="button" class="btn-modal-save" id="btn-save-edit-modal">保存修改 ✓</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= 面板 2：实习经历（完整简历迁移） ================= -->
+        <div class="cici-panel" id="tab-internship">
+          <!-- 美团 -->
+          <div class="cici-row">
+            <div class="cici-time">
+              <span class="time-range">2026.05 —<br>2026.09</span>
+            </div>
+            <div class="cici-body">
+              <h3 class="cici-role">美团 | 商业化产品经理</h3>
+              <div class="cici-major-sub">美团 / 商业增值部 / 联盟广告</div>
+              <div class="cici-desc" style="margin-top: 14px;">
+                <p class="biz-intro"><strong>业务职责</strong>美团返返小程序是美团赏金联盟依托微信生态的本地生活营销平台。核心广告产品「爆单活动」作为限时推广工具，以 CPS 为核心商业模式为商家提供站外营销解决方案。负责优化 C 端体验，构建获客-留存-内容用户增长飞轮，反哺 B 端营销价值。</p>
+
+                <div class="proj-deck" data-proj-deck>
+                  <div class="proj-deck-track">
+                    <article class="proj-card hand-card">
+                      <h4 class="proj-title">1. 纯评价计划（0-1 落地）<span class="okr-tag">OKR：抢占商户内容营销预算，为到店侧储备内容供给能力</span></h4>
+                      <p><strong>【背景】</strong>商家对「产出优质真实评价」存在明确营销诉求，自营评价追返模式评价率达 80%，链路效率更高，具备放大收益机会。短期跑通模式保证体验并提升评价率与佣金，长期让商家感知广告增量并提升续费意愿。</p>
+                      <p><strong>【行动】</strong>灰度实验逐步放量，回收数据验证效果；针对两种任务混排的曝光冲突，设计前端实验，通过数据与客诉决策最优方式。</p>
+                      <p><strong>【结果】</strong>流量侧实验组 uv-cvr +7.8%、佣金收入 +18.2%，任务失败率仅 5.9%；商家侧开启前后 AA 对比商家整体 GMV +6%、平台 GMV +8.8%，AB 对比自营 GMV 较三方渠道高 5%、单均佣金高 2.6%。官方赋能对商家经营带来明确正向收益。</p>
+                    </article>
+
+                    <article class="proj-card hand-card">
+                      <h4 class="proj-title">2. 节点营销（世界杯 / 立秋奶茶）<span class="okr-tag">OKR：多通道协同实现用户拉新与留存</span></h4>
+                      <p><strong>【背景】</strong>DAU 增长渐缓，需节点性流量爆发刺激用户心智、拉动特定品类订单并消耗商家库存。</p>
+                      <p><strong>【行动】</strong>世界杯侧重夜宵类，秋奶聚焦饮品全品类；搭建品类落地页配合发券与换肤，创建 RTB 素材生成 skill 同期快速投放。</p>
+                      <p><strong>【结果】</strong>饮品品类订单年同比 +342%、周环比 +14.3%（美食 +3%，甜点 +14.3%）；立秋当天小程序总订单涨幅 3 倍、饮品订单涨幅 5.5 倍；库存消耗率同比去年扩大 2.6 倍，对比三方（1.3倍）转化更佳。</p>
+                    </article>
+
+                    <article class="proj-card hand-card">
+                      <h4 class="proj-title">3. 分时段分品类曝光权重调优策略<span class="okr-tag">OKR：构建精细化流量分发能力，提升整体变现效率</span></h4>
+                      <p><strong>【行动】</strong>基于品类 × 时段转化率错配进行分析并落地实验，对低效曝光品类大幅降权，高转化高供给品类提权。</p>
+                      <p><strong>【结果】</strong>实验结果负向（订单 -2.2%），不藏拙，通过漏斗与归因追到底，定位到“人工强规则破坏模型平衡”的核心问题，推动后续策略从“人工写规则”转向“模型特征化迭代”。</p>
+                    </article>
+                  </div>
+                  <div class="deck-controls">
+                    <button class="deck-arrow" type="button" data-deck-prev aria-label="上一个项目">←</button>
+                    <div class="deck-dots" data-deck-dots></div>
+                    <button class="deck-arrow" type="button" data-deck-next aria-label="下一个项目">→</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VERTU -->
+          <div class="cici-row">
+            <div class="cici-time">
+              <span class="time-range">2026.01 —<br>2026.04</span>
+            </div>
+            <div class="cici-body">
+              <h3 class="cici-role">VERTU | AI 产品经理</h3>
+              <div class="cici-major-sub">VERTU / 创新部</div>
+              <div class="cici-desc" style="margin-top: 14px;">
+                <div class="proj-deck" data-proj-deck>
+                  <div class="proj-deck-track">
+                    <article class="proj-card hand-card">
+                      <h4 class="proj-title">1. AI 智能招聘<span class="okr-tag">OKR：解决传统招聘流程中 JD 撰写门槛高、简历筛选效率低、人才池枯竭等痛点，打造高效、智能的招聘全链路方案</span></h4>
+                      <p><strong>【问题识别】</strong>通过数据漏斗发现，传统招聘瓶颈在于范围广、决策滞后、JD 描述泛化的问题；AI 初筛缺乏训练、忽略硬性条件的约束及 HR 主观因素导致合格率仅 7.14%，高优率仅 2.5%，低优捞回率 8%，AI 生成 JD 使用率 12%。</p>
+                      <p><strong>【方案设计】</strong>（1）人机协作：设计激励计划，收集大量数据，通过人工抽检校验 AI 初筛的召回率与准确率，识别 AI 在复杂背景识别上的边界；（2）数据分析：拉取 badcase 进行问题定位，点对点分析所推简历被 HR 设为不合适的原因；（3）Agent 构建：基于 FastGPT 搭建匹配度评估、JD 生成等智能体，通过迭代 Prompt、引入 RAG 优化 AI 决策逻辑，增强 AI 筛选简历合格率。</p>
+                      <p><strong>【项目结果】</strong>AI 初筛合格率在三周内从 7.14% 提升至 72.03%，JD 使用率提高 10%，入职转化率、高优率逐步提高，低分捞回率降低，JD 智能生成模块落地见效，使用率从 12% 提升至 74%。通过数据分析定位并解决漏斗瓶颈，显著提升全链路转化。</p>
+                    </article>
+
+                    <article class="proj-card hand-card">
+                      <h4 class="proj-title">2. MetaSelf 健康<span class="okr-tag">OKR：交付软硬一体 AI 方案，通过原生数据驱动个性化建议，提升用户决策价值</span></h4>
+                      <p><strong>【问题识别】</strong>健康建议缺乏个性化、用户对健康数据理解成本高，数据分析因女性经期、孕期时产生的身体变化而崩坏。现有智能戒指配套 APP 缺少针对性 AI 指导，导致用户留存与粘性不足，同时数据价值未完全盘活，用户难以感知硬件监测的实际用处。</p>
+                      <p><strong>【方案设计】</strong>通过调研与竞品分析，从 0 到 1 主导女性健康功能模块设计，搭建适配女性生理阶段的数据分析逻辑，修正偏差问题；优化睡眠数据可视化呈现逻辑，降低理解成本，设计个性化、趣味性分享卡片；同时作为内测用户参与产品迭代，完善决策。</p>
+                      <p><strong>【项目结果】</strong>产出 30+ 条内测有效反馈并推动体验，提升产品智能化。</p>
+                    </article>
+                  </div>
+                  <div class="deck-controls">
+                    <button class="deck-arrow" type="button" data-deck-prev aria-label="上一个项目">←</button>
+                    <div class="deck-dots" data-deck-dots></div>
+                    <button class="deck-arrow" type="button" data-deck-next aria-label="下一个项目">→</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= 面板 3：荣誉奖项（完整简历迁移） ================= -->
+        <div class="cici-panel" id="tab-awards">
+          <!-- 竞赛获奖 -->
+          <div class="cici-row cici-row-full">
+            <div class="cici-body">
+              <h3 class="cici-role">科技竞赛与学术创新</h3>
+              <div class="cici-desc" style="margin-top: 14px;">
+                <div class="award-list">
+                  <div class="award-item">
+                    <span class="award-year">2025</span>
+                    <span class="award-name">第十八届“挑战杯”大学生课外学术科技作品竞赛 · 校级三等奖</span>
+                  </div>
+                  <div class="award-item">
+                    <span class="award-year">2025</span>
+                    <span class="award-name">大学生创新创业训练计划 · 校级重点立项</span>
+                  </div>
+                  <div class="award-item">
+                    <span class="award-year">2024</span>
+                    <span class="award-name">四川大学船模大赛 · 校级二等奖</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 奖学金与荣誉称号 -->
+          <div class="cici-row cici-row-full">
+            <div class="cici-body">
+              <h3 class="cici-role">奖学金与干部荣誉</h3>
+              <div class="cici-desc" style="margin-top: 14px;">
+                <div class="award-list">
+                  <div class="award-item">
+                    <span class="award-year">2025</span>
+                    <span class="award-name">四川大学校级单项一等奖学金</span>
+                  </div>
+                  <div class="award-item">
+                    <span class="award-year">2025</span>
+                    <span class="award-name">四川大学校级优秀共青团干部（团支部书记）</span>
+                  </div>
+                  <div class="award-item">
+                    <span class="award-year">2024</span>
+                    <span class="award-name">四川大学校级三等综合奖学金</span>
+                  </div>
+                  <div class="award-item">
+                    <span class="award-year">2023</span>
+                    <span class="award-name">四川大学校级“三信”奖学金</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 第四幕 · 兴趣爱好 ================= -->
+  <section id="act4" class="act act-life">
+    <header class="act-head">
+<p class="eyebrow">LIFE BEYOND WORK. / 第四幕</p>
+<h2 class="act-title">一颗苹果的香甜，<span class="accent">需要......</span></h2>
+    </header>
+
+<div class="life-group reveal">
+<div class="life-branch-head">
+<span class="branch-icon-badge">📷</span>
+<div><h3>摄影 · 视野捕捉</h3><p class="life-quote">"拿起尼康那天起，朋友们的朋友圈封面我包了。"</p></div>
+</div>
+<div class="marquee-gallery marquee-gallery--album" data-marquee data-speed="60" aria-label="摄影作品横向滚动画廊">
+<!-- 固定居左的人像影集入口（点击展开翻页相册） -->
+<button class="album-fixed" id="album-closed" aria-label="点击查看影集">
+  <span class="album-float-toast" aria-hidden="true">点击查看影集</span>
+  <span class="album-book">
+    <span class="ab-spine" aria-hidden="true"></span>
+    <span class="ab-cover">
+      <span class="ab-title">YUNLlly 人像影集</span>
+    </span>
+  </span>
+</button>
+<span class="album-fade" aria-hidden="true"></span>
+<div class="marquee-track">
+<figure class="marquee-item"><img src="assets/img/hobby/photo/photo-191.jpg" alt="摄影作品" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/photo/photo-192.jpg" alt="摄影作品" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/photo/photo-195.jpg" alt="摄影作品" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/photo/photo-196.jpg" alt="摄影作品" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/photo/photo-197.jpg" alt="摄影作品" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/photo/photo-198.jpg" alt="摄影作品" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/photo/photo-199.jpg" alt="摄影作品" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/photo/photo-200.jpg" alt="摄影作品" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/photo/photo-201.jpg" alt="摄影作品" loading="lazy" decoding="async"></figure>
+</div>
+</div>
+
+<div class="life-group reveal">
+<div class="life-branch-head">
+<span class="branch-icon-badge">✍️</span>
+<div><h3>写字画画 · 笔墨思考</h3><p class="life-quote">"课本边角的字，比正文记得久。"</p></div>
+</div>
+<div class="marquee-gallery" data-marquee data-speed="50" aria-label="写字画画作品横向滚动画廊">
+<div class="marquee-track">
+<figure class="marquee-item"><img src="assets/img/hobby/write/write-219.jpg" alt="手写字迹" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/write/write-221.jpg" alt="手写字迹" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/write/write-223.jpg" alt="手写字迹" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/write/write-224.jpg" alt="手写字迹" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/write/write-225.jpg" alt="手绘作品" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/write/write-228.jpg" alt="手写字迹" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/write/write-229.jpg" alt="手写字迹" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/write/write-230.jpg" alt="手写字迹" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/write/write-232.jpg" alt="手写字迹" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/write/write-234.jpg" alt="手写字迹" loading="lazy" decoding="async"></figure>
+</div>
+</div>
+</div>
+
+<div class="life-group reveal">
+<div class="life-branch-head">
+<span class="branch-icon-badge">🎙️</span>
+<div><h3>舞台 · 表达与光</h3><p class="life-quote">"从高中播音员到大学主持人人才库，话筒是另一个老朋友。"</p></div>
+</div>
+<div class="marquee-gallery" data-marquee data-speed="55" aria-label="舞台经历横向滚动画廊">
+<div class="marquee-track">
+<figure class="marquee-item"><img src="assets/img/hobby/stage/stage-gaozhong-boyin.jpg" alt="高中播音员" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/stage/stage-gaozhong-zhuchi.jpg" alt="高中主持" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/stage/stage-zhuchi.jpg" alt="主持现场" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/stage/stage-daxue-zhuchi.jpg" alt="大学主持" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/stage/stage-changge.jpg" alt="唱歌舞台" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/stage/stage-hechang.jpg" alt="合唱舞台" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/stage/stage-ktv.jpg" alt="KTV 唱歌" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/stage/stage-tiaowu.jpg" alt="跳舞" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/stage/stage-tiaowu2.jpg" alt="跳舞" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/stage/stage-242.jpg" alt="舞台瞬间" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/hobby/stage/stage-243.jpg" alt="舞台瞬间" loading="lazy" decoding="async"></figure>
+</div>
+</div>
+</div>
+
+<div class="life-group reveal">
+<div class="life-branch-head">
+<span class="branch-icon-badge">🧳</span>
+<div><h3>旅行 · 果篮里的远方</h3><p class="life-quote">"提回来四篮远方：雪山、山城、周末和邛海的风。"</p></div>
+</div>
+
+<div class="travel-loc"><b>青海</b><i>QINGHAI · 雪山与盐湖</i></div>
+<div class="marquee-gallery" data-marquee data-speed="55" aria-label="青海旅行照片横向滚动画廊">
+<div class="marquee-track">
+<figure class="marquee-item"><img src="assets/img/travel/qinghai/chaka.jpg" alt="茶卡盐湖" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/travel/qinghai/qinghaihu.jpg" alt="青海湖" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/travel/qinghai/qilian.jpg" alt="祁连" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/travel/qinghai/gangshika.jpg" alt="岗什卡雪峰" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/travel/qinghai/xining.jpg" alt="西宁" loading="lazy" decoding="async"></figure>
+</div>
+</div>
+
+<div class="travel-loc"><b>重庆</b><i>CHONGQING · 8D 魔幻山城</i></div>
+<div class="marquee-gallery" data-marquee data-speed="55" aria-label="重庆旅行照片横向滚动画廊">
+<div class="marquee-track">
+<figure class="marquee-item"><img src="assets/img/travel/chongqing/hongyadong.jpg" alt="洪崖洞" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/travel/chongqing/ciqikou.jpg" alt="磁器口" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/travel/chongqing/litang.jpg" alt="李子坝" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/travel/chongqing/cq1.jpg" alt="重庆街景" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/travel/chongqing/beicang.jpg" alt="北仓" loading="lazy" decoding="async"></figure>
+</div>
+</div>
+
+<div class="travel-loc"><b>成都周边</b><i>CHENGDU · 周末就出发</i></div>
+<div class="marquee-gallery" data-marquee data-speed="55" aria-label="成都周边旅行照片横向滚动画廊">
+<div class="marquee-track">
+<figure class="marquee-item"><img src="assets/img/travel/chengdu/dujiangyan.jpg" alt="都江堰" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/travel/chengdu/laojunshan.jpg" alt="老君山" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/travel/chengdu/taiping.jpg" alt="太平" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/travel/chengdu/dujiangyan2.jpg" alt="都江堰二" loading="lazy" decoding="async"></figure>
+</div>
+</div>
+
+<div class="travel-loc"><b>西昌</b><i>XICHANG · 邛海的风</i></div>
+<div class="marquee-gallery" data-marquee data-speed="55" aria-label="西昌旅行照片横向滚动画廊">
+<div class="marquee-track">
+<figure class="marquee-item"><img src="assets/img/travel/xichang/xichang1.jpg" alt="邛海" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/travel/xichang/xichang2.jpg" alt="西昌" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/travel/xichang/xichang3.jpg" alt="西昌" loading="lazy" decoding="async"></figure>
+<figure class="marquee-item"><img src="assets/img/travel/xichang/xichang4.jpg" alt="西昌" loading="lazy" decoding="async"></figure>
+</div>
+</div>
+</div>
+  </section>
+
+  <!-- ================= 第五幕 · 树根草坪 & 树下女孩（坐在树下读书，无白框） ================= -->
+  <section id="act5" class="act act-lawn">
+    <header class="act-head">
+      <p class="eyebrow">THE LANDING. / 终幕</p>
+      <h2 class="act-title">树下读书与<br><span class="accent">灵感顿悟</span></h2>
+    </header>
+
+    <div class="lawn-stage">
+      <!-- 树下女孩区域：直接坐在草地树根旁，无任何白框包裹 -->
+      <div class="tree-under-girl-area">
+        <div class="girl-interactive-wrapper" id="girl-interact-zone" title="点击女孩，看看被苹果砸中的顿悟瞬间！">
+          <img id="girl-main-img" src="assets/img/girl/girl-sitting-aligned.png" alt="树下女孩正在读书" class="girl-standalone-img" />
+          <div class="quote-bubble hand-card" id="quote-bubble">
+            <span class="quote-text">"被砸中是运气，接得住是本事。"</span>
+            <span class="quote-sub-hint">（点击女孩，迸发下一条灵感 ✦）</span>
+          </div>
+          <div class="inspire-particles" id="inspire-particles" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <!-- 职业规划三卡 -->
+      <div class="career-cards">
+        <div class="career-card hand-card reveal">
+          <span class="career-k">短期 · 1–2 年</span>
+          <p>深耕 AI × 商业化产品，用 skill / agent / 工作流把自己练成<strong>"一人产品团队"</strong>——想法当天就能变成能跑的产品。</p>
+        </div>
+        <div class="career-card hand-card reveal">
+          <span class="career-k">中期 · 3–5 年</span>
+          <p>成为懂技术、懂商业、能把 AI 当杠杆的产品人：<strong>让好产品自己长出商业果实</strong>。</p>
+        </div>
+        <div class="career-card claim hand-card reveal">
+          <span class="career-k">个人主张</span>
+          <p class="claim-line">"被砸中是运气，<br>接得住是本事。"</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 联系方式卡 -->
+    <div class="contact-card hand-card reveal">
+      <p class="eyebrow">LET'S TALK.</p>
+      <h3>把你的苹果丢给我</h3>
+      <div class="contact-rows">
+        <button id="copy-email" class="contact-btn" data-email="1469127811@qq.com" data-cursor-label="复制邮箱">
+          <span class="c-k">Email</span><span class="c-v">1469127811@qq.com</span><span class="c-hint">点击复制</span>
+        </button>
+        <div class="contact-row"><span class="c-k">WeChat</span><span class="c-v">-WeChat-Llly</span></div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <span>© 2026 李依阳 · The Falling Apple</span>
+      <button id="back-to-crown" class="back-link" data-cursor-label="回到顶部">回到树冠 ↑</button>
+    </footer>
+  </section>
+</main>
+
+<!-- ================= 人像翻页影集 ================= -->
+<div id="portrait-book" class="pb-overlay" hidden>
+  <div class="pb-backdrop"></div>
+  <button class="pb-close" aria-label="合上影集">Close ×</button>
+  <div class="pb-stage">
+    <div class="pb-book" id="pb-book">
+      <div class="pb-base-left" aria-hidden="true"></div>
+      <div class="pb-backcover" aria-hidden="true"><span class="pb-backcover-inner"><b>TO BE<br>CONTINUED…</b><i>快门不停，人像未完待续</i></span></div>
+    </div>
+  </div>
+  <div class="pb-pager">
+    <button class="pb-arrow" id="pb-prev" aria-label="上一页">←</button>
+    <span class="pb-count hand-card" id="pb-count">封面</span>
+    <button class="pb-arrow" id="pb-next" aria-label="下一页">→</button>
+  </div>
+</div>
+
+<!-- ================= Lightbox ================= -->
+<div id="lightbox" class="lightbox" hidden>
+  <button class="lb-close" aria-label="关闭">Close ×</button>
+  <div class="lb-grid" id="lb-grid"></div>
+  <div class="lb-zoom" id="lb-zoom" hidden><img id="lb-zoom-img" alt="" /></div>
+</div>
+
+<div id="toast" class="toast hand-card" hidden>已接住 ✓</div>
+<div id="bubble-layer" aria-hidden="true"></div>
+
+<!-- 脚本 -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="js/app.js?v=2.6" defer></script>
+</body>
+</html>
