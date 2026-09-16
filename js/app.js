@@ -80,9 +80,9 @@
         if (hasGsap && window.ScrollTrigger) {
           ScrollTrigger.refresh();
         }
-        // 吸顶状态下切换：把滚动位置重新锚定到 tab 栏吸顶点，避免跳到后方区块
+        // 吸顶状态下切换：定位到新面板顶部（tab 栏吸顶在其上方），确保内容从头展示
         if (wasStuck && bar) {
-          const y = bar.getBoundingClientRect().top + window.scrollY;
+          const y = targetPanel.getBoundingClientRect().top + window.scrollY - bar.offsetHeight;
           if (typeof lenis !== "undefined" && lenis) lenis.scrollTo(y, { immediate: true });
           else window.scrollTo(0, y);
         }
