@@ -1071,8 +1071,8 @@ gap: 0;
   z-index: 10;
 }
 .body-owner-mode .card-owner-actions,
-.mindset-card-item:hover .card-owner-actions,
-.mindset-wall-item:hover .card-owner-actions {
+.body-owner-mode .mindset-card-item:hover .card-owner-actions,
+.body-owner-mode .mindset-wall-item:hover .card-owner-actions {
   display: flex;
 }
 .btn-card-action {

@@ -529,6 +529,7 @@ let lastY = window.scrollY, lastBubbleAt = 0;
         card.addEventListener("click", (e) => {
           // 管理模式下点击编辑/删除按钮
           if (e.target.closest(".btn-card-action")) {
+            if (!isOwnerMode) return; // 只允许管理模式编辑/删除
             e.stopPropagation();
             const editBtn = e.target.closest(".btn-edit");
             const delBtn = e.target.closest(".btn-del");
@@ -670,30 +671,38 @@ let lastY = window.scrollY, lastBubbleAt = 0;
       if (modalAuthor) modalAuthor.value = "";
     };
 
-    // 删除心法（软删除：云端 deleted=true，库里保留但网页不再显示）
+    // 删除心法（软删除：云端 deleted=true，库里保留但网页不再显示；仅管理模式可用）
     const deleteMindset = (id) => {
+      if (!isOwnerMode) return; // 双保险：非管理模式直接拒绝
       const overrides = getMindsetOverrides();
       overrides[id + "_deleted"] = true;
       saveMindsetOverrides(overrides);
       const client = ensureOwnerClient();
+      const showToast = (text) => {
+        const toast = $("#toast");
+        if (toast) {
+          toast.textContent = text;
+          toast.hidden = false;
+          toast.classList.add("show");
+          clearTimeout(toast._t);
+          toast._t = setTimeout(() => { toast.classList.remove("show"); toast.hidden = true; }, 1800);
+        }
+      };
       if (client) {
         client.from("mindsets").update({ deleted: true }).eq("id", id).select()
           .then(({ data: rows, error }) => {
-            if (error) console.warn("云端删除失败：", error.message);
-            else if (!rows || rows.length === 0) console.warn("云端删除未生效（口令可能不对或该条不在云端），已仅本页隐藏");
+            if (error || !rows || rows.length === 0) {
+              console.warn("云端删除未同步：", error ? error.message : "口令可能不对或该条不在云端");
+              showToast("已删除（仅本机生效，云端未同步）");
+            } else {
+              showToast("心法已删除 ✗（云端已同步）");
+            }
           });
+      } else {
+        showToast("已删除（仅本机生效）");
       }
 
       refreshMindsetViews();
-
-      const toast = $("#toast");
-      if (toast) {
-        toast.textContent = "心法已删除 ✗";
-        toast.hidden = false;
-        toast.classList.add("show");
-        clearTimeout(toast._t);
-        toast._t = setTimeout(() => { toast.classList.remove("show"); toast.hidden = true; }, 1800);
-      }
     };
 
     // 切换管理模式（开启时需设置/输入管理口令，用于云端编辑删除鉴权）
@@ -889,6 +898,7 @@ let lastY = window.scrollY, lastBubbleAt = 0;
 
         item.addEventListener("click", (e) => {
           if (e.target.closest(".btn-card-action")) {
+            if (!isOwnerMode) return; // 只允许管理模式编辑/删除
             e.stopPropagation();
             const editBtn = e.target.closest(".btn-edit");
             const delBtn = e.target.closest(".btn-del");
