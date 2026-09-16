@@ -85,9 +85,9 @@ button { font-family: inherit; color: inherit; background: none; border: none; c
 }
 .accent { color: var(--apple); }
 .act-sub-hint {
-  margin-top: 12px;
+  margin-top: 14px;
   font-family: var(--font-kai);
-  font-size: 15px;
+  font-size: 30px;
   letter-spacing: 0.02em;
   color: var(--ink-soft);
   animation: hint-bob 2s ease-in-out infinite;
@@ -1962,24 +1962,36 @@ transition: transform .25s ease;
 }
 .album-float-toast {
   position: absolute;
-  top: -34px;
+  top: 46%;
   left: 50%;
-  transform: translateX(-50%) rotate(-2deg);
-  padding: 5px 13px;
-  font-size: 12px;
+  transform: translate(-50%, -50%) rotate(-2deg);
+  padding: 6px 14px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--ink);
-  background: rgba(251, 244, 230, .85);
-  border: 1px solid rgba(17, 17, 17, .5);
+  background: rgba(251, 244, 230, .95);
+  border: 1.5px solid rgba(17, 17, 17, .65);
   border-radius: 999px;
+  box-shadow: 0 3px 10px rgba(17, 17, 17, .28);
   white-space: nowrap;
   pointer-events: none;
+  z-index: 3;
   animation: toastFloat 2.4s ease-in-out infinite;
 }
 @keyframes toastFloat {
-  0%, 100% { transform: translateX(-50%) rotate(-2deg) translateY(0); opacity: .95; }
-  50% { transform: translateX(-50%) rotate(-2deg) translateY(-4px); opacity: .7; }
+  0%, 100% { transform: translate(-50%, -50%) rotate(-2deg) translateY(0); opacity: 1; }
+  50% { transform: translate(-50%, -50%) rotate(-2deg) translateY(-4px); opacity: .82; }
 }
+/* 影集大幅晃动提醒 */
+@keyframes album-shake {
+  0%, 100% { transform: translateY(-50%) rotate(0deg); }
+  15% { transform: translateY(-50%) rotate(-8deg) translateX(-4px); }
+  30% { transform: translateY(-50%) rotate(7deg) translateX(4px); }
+  45% { transform: translateY(-50%) rotate(-6deg); }
+  60% { transform: translateY(-50%) rotate(5deg); }
+  75% { transform: translateY(-50%) rotate(-2.5deg); }
+}
+.album-fixed.is-shaking { animation: album-shake .95s ease-in-out; }
 /* 相册右侧边缘：底色→透明渐变，照片滑入时淡出 */
 .album-fade {
   position: absolute;
@@ -2361,7 +2373,7 @@ transition: transform .25s ease;
   .album-fixed { padding-left: 6px; }
   .album-book { width: 128px; height: 171px; }
   .ab-title { font-size: 10px; letter-spacing: .1em; }
-  .album-float-toast { font-size: 11px; top: -28px; }
+  .album-float-toast { font-size: 12px; top: 46%; }
   .album-fade { left: 128px; width: 70px; }
   .marquee-gallery--album .marquee-track { padding-left: 142px; }
   .pb-book { --pbw: min(44vw, 34vh); }

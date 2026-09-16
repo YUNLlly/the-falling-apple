@@ -1389,6 +1389,14 @@ let lastY = window.scrollY, lastBubbleAt = 0;
     const closeBtn = $(".pb-close", overlay);
     const entryBook = $(".album-book", entryBtn);
 
+    /* ---- 周期性大幅晃动影集，提醒用户点击（打开过一次后停止） ---- */
+    const shakeTimer = setInterval(() => {
+      if (!overlay.hidden) return; // 影集打开中不晃
+      entryBtn.classList.add("is-shaking");
+      setTimeout(() => entryBtn.classList.remove("is-shaking"), 1000);
+    }, 6000);
+    entryBtn.addEventListener("click", () => clearInterval(shakeTimer), { once: true });
+
     /* ---- 构建书页 ---- */
     // 页面 HTML：照片拼贴 + 组名标签
     const photosHTML = (items) => items.map((it) => `
