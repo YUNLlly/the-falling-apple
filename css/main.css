@@ -84,6 +84,18 @@ button { font-family: inherit; color: inherit; background: none; border: none; c
   letter-spacing: 0.02em;
 }
 .accent { color: var(--apple); }
+.act-sub-hint {
+  margin-top: 12px;
+  font-family: var(--font-kai);
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  animation: hint-bob 2s ease-in-out infinite;
+}
+@keyframes hint-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
 
 /* ---------- 自定义苹果光标 ---------- */
 #cursor {
@@ -1718,7 +1730,6 @@ transition: transform .25s ease;
   z-index: 10;
 }
 .quote-text { display: block; color: var(--ink); }
-.quote-sub-hint { display: block; font-size: 11px; color: var(--apple); font-weight: 600; margin-top: 4px; }
 @keyframes bubble-hover {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
