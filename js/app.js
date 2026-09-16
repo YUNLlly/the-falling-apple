@@ -1389,13 +1389,16 @@ let lastY = window.scrollY, lastBubbleAt = 0;
     const closeBtn = $(".pb-close", overlay);
     const entryBook = $(".album-book", entryBtn);
 
-    /* ---- 周期性大幅晃动影集，提醒用户点击（打开过一次后停止） ---- */
-    const shakeTimer = setInterval(() => {
-      if (!overlay.hidden) return; // 影集打开中不晃
-      entryBtn.classList.add("is-shaking");
-      setTimeout(() => entryBtn.classList.remove("is-shaking"), 1000);
-    }, 6000);
-    entryBtn.addEventListener("click", () => clearInterval(shakeTimer), { once: true });
+    /* ---- 无人打开时交替「大幅晃动 / 翻开封面偷看」提醒（打开过一次后永久停止） ---- */
+    let hintRound = 0;
+    const hintTimer = setInterval(() => {
+      if (!overlay.hidden) return; // 影集打开中不提醒
+      hintRound++;
+      const cls = hintRound % 2 === 1 ? "is-shaking" : "is-peeking";
+      entryBtn.classList.add(cls);
+      setTimeout(() => entryBtn.classList.remove(cls), 1600);
+    }, 4500);
+    entryBtn.addEventListener("click", () => clearInterval(hintTimer), { once: true });
 
     /* ---- 构建书页 ---- */
     // 页面 HTML：照片拼贴 + 组名标签

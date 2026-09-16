@@ -1992,6 +1992,12 @@ transition: transform .25s ease;
   75% { transform: translateY(-50%) rotate(-2.5deg); }
 }
 .album-fixed.is-shaking { animation: album-shake .95s ease-in-out; }
+/* 翻开封面偷看第一页（比 hover 更大幅度，提醒用户可翻开） */
+@keyframes album-peek {
+  0%, 100% { transform: rotateY(0deg); }
+  35%, 65% { transform: rotateY(-32deg); }
+}
+.album-fixed.is-peeking .ab-cover { animation: album-peek 1.5s ease-in-out; }
 /* 相册右侧边缘：底色→透明渐变，照片滑入时淡出 */
 .album-fade {
   position: absolute;
