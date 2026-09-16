@@ -181,6 +181,10 @@ let lastY = window.scrollY, lastBubbleAt = 0;
   const DEFAULT_GIRL_SRC = "assets/img/girl/girl-sitting-aligned.png";
   const HIT_GIRL_SRC = "assets/img/girl/girl-hit-aligned.png";
 
+  // 预加载被砸状态图：点击时秒换，不因网络慢而"看起来没反应"
+  const hitPreloader = new Image();
+  hitPreloader.src = HIT_GIRL_SRC;
+
   const INSPIRATION_QUOTES = [
     "被砸中是运气，接得住是本事。",
     "把每个负向实验都追到归因为止。",
