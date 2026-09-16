@@ -283,35 +283,63 @@ let lastY = window.scrollY, lastBubbleAt = 0;
 
     if (!deckTrack) return;
 
-    /* ---- Supabase 云端共享：访客心法全员可见 ---- */
+    /* ---- Supabase 云端共享：心法全员可见 + 站主口令鉴权管理 ---- */
     const SB_URL = "https://urhbxlrabjvsyesdqmse.supabase.co";
     const SB_KEY = "sb_publishable__pY87xPS68T7oYQaB24nsQ_TguDNPBI";
     const sb = (window.supabase && window.supabase.createClient)
       ? window.supabase.createClient(SB_URL, SB_KEY) : null;
-    let cloudGuests = null; // null=尚未加载完成，数组=已加载
+    let sbOwner = null;   // 携带管理口令请求头的客户端（管理模式激活时创建）
+    let cloudAll = null;      // 云端未删除的心法（owner + guest）
+    let cloudDeletedIds = new Set(); // 云端已软删除的 id（网页不再显示，库里保留）
 
-    // 从云端拉取所有访客心法（失败时降级用本地缓存，不阻塞首屏）
+    const getOwnerToken = () => sessionStorage.getItem("yiyang_owner_token") || "";
+    const ensureOwnerClient = () => {
+      const token = getOwnerToken();
+      if (!token) return null;
+      if (!sbOwner) sbOwner = window.supabase.createClient(SB_URL, SB_KEY, {
+        global: { headers: { "x-owner-token": token } }
+      });
+      return sbOwner;
+    };
+
+    // 拉取云端心法（失败时降级用本地缓存，不阻塞首屏）
     const loadCloudMindsets = async () => {
       if (!sb) return;
       try {
         const { data, error } = await sb.from("mindsets")
-          .select("id,content,author,created_at")
-          .eq("type", "guest").eq("status", "approved")
+          .select("id,type,content,author,created_at,edited,deleted")
+          .eq("status", "approved")
           .order("created_at", { ascending: true });
         if (error) throw error;
-        cloudGuests = (data || []).map((r) => ({
-          id: r.id,
-          text: r.content,
-          author: r.author || "神秘访客",
+        const rows = data || [];
+        cloudAll = rows.filter(r => !r.deleted).map(r => ({
+          id: r.id, type: r.type, content: r.content,
+          author: r.author || "神秘访客", edited: !!r.edited,
           time: r.created_at ? new Date(r.created_at).getTime() : Date.now()
         }));
-        localStorage.setItem("yiyang_cloud_guest_cache", JSON.stringify(cloudGuests));
+        cloudDeletedIds = new Set(rows.filter(r => r.deleted).map(r => r.id));
+        localStorage.setItem("yiyang_cloud_guest_cache", JSON.stringify(cloudAll.filter(r => r.type === "guest")));
       } catch (e) {
         console.warn("云端心法拉取失败，降级用本地缓存：", e.message);
-        try { cloudGuests = JSON.parse(localStorage.getItem("yiyang_cloud_guest_cache") || "[]"); }
-        catch { cloudGuests = []; }
+        try { cloudAll = JSON.parse(localStorage.getItem("yiyang_cloud_guest_cache") || "[]"); }
+        catch { cloudAll = []; }
       }
       refreshMindsetViews();
+    };
+
+    // 首次开启管理模式：把 6 条核心心法种入云端（已存在则跳过）
+    const seedCoreMindsetsToCloud = async () => {
+      const client = ensureOwnerClient();
+      if (!client) return;
+      const { data } = await client.from("mindsets").select("id").eq("type", "owner");
+      const have = new Set((data || []).map(r => r.id));
+      const missing = CORE_MINDSETS_DATA.filter(m => !have.has(m.id));
+      if (!missing.length) return;
+      const { error } = await client.from("mindsets").insert(missing.map(m => ({
+        id: m.id, type: "owner", content: m.html, author: "YUNLlly", status: "approved"
+      })));
+      if (error) console.warn("核心心法入云失败：", error.message);
+      else loadCloudMindsets();
     };
 
     // 本人核心心法（可编辑内容）
@@ -352,7 +380,7 @@ let lastY = window.scrollY, lastBubbleAt = 0;
           id, type: "guest", content: text, author: authorName, status: "approved"
         }).then(({ error }) => {
           if (error) console.warn("云端保存失败，本条仅本机可见：", error.message);
-          else if (cloudGuests) cloudGuests.push({ id, text, author: authorName, time: Date.now() });
+          else if (cloudAll) cloudAll.push({ id, type: "guest", content: text, author: authorName, edited: false, time: Date.now() });
         });
       }
       return list;
@@ -360,25 +388,31 @@ let lastY = window.scrollY, lastBubbleAt = 0;
 
     // 访客心法数据源：云端已加载 → 云端 + 本机未同步成功的合并；否则用本地
     const getGuestSource = () => {
-      if (cloudGuests === null) return getSavedGuestMindsets();
-      const localOnly = getSavedGuestMindsets().filter(l => !cloudGuests.some(c => c.id === l.id));
-      return [...localOnly, ...cloudGuests];
+      if (cloudAll === null) return getSavedGuestMindsets();
+      const cloudGuestRows = cloudAll.filter(r => r.type === "guest")
+        .map(r => ({ id: r.id, text: r.content, author: r.author, time: r.time }));
+      const localOnly = getSavedGuestMindsets().filter(l =>
+        !cloudGuestRows.some(c => c.id === l.id) && !cloudDeletedIds.has(l.id));
+      return [...localOnly, ...cloudGuestRows];
     };
 
-    // 合并所有心法为统一列表
+    // 合并所有心法为统一列表（云端已加载时，优先以云端为准）
     const getAllMindsets = () => {
       const overrides = getMindsetOverrides();
+      const cloudById = cloudAll ? new Map(cloudAll.map(r => [r.id, r])) : null;
+
       const coreList = CORE_MINDSETS_DATA
-        .filter(m => !overrides[m.id + "_deleted"])
+        .filter(m => !overrides[m.id + "_deleted"] && !(cloudDeletedIds && cloudDeletedIds.has(m.id)))
         .map(m => {
           const ov = overrides[m.id];
+          const c = cloudById ? cloudById.get(m.id) : null;
           return {
             id: m.id,
             type: "owner",
             num: m.id.replace("core-", "").padStart(2, "0"),
             fullWidth: m.fullWidth,
-            html: ov ? ov.html : m.html,
-            isEdited: !!ov
+            html: ov ? ov.html : (c ? c.content : m.html),
+            isEdited: !!ov || !!(c && c.edited)
           };
         });
 
@@ -386,6 +420,7 @@ let lastY = window.scrollY, lastBubbleAt = 0;
         .filter(g => !overrides[g.id + "_deleted"])
         .map((g, i) => {
           const ov = overrides[g.id];
+          const c = cloudById ? cloudById.get(g.id) : null;
           return {
             id: g.id,
             type: "guest",
@@ -393,7 +428,7 @@ let lastY = window.scrollY, lastBubbleAt = 0;
             fullWidth: false,
             html: ov ? ov.html : escapeHtml(g.text),
             author: ov && ov.author ? ov.author : g.author,
-            isEdited: !!ov
+            isEdited: !!ov || !!(c && c.edited)
           };
         });
 
@@ -576,19 +611,40 @@ let lastY = window.scrollY, lastBubbleAt = 0;
       modalContent.focus();
     };
 
+    // 云端同步编辑（站主鉴权）：更新正文 + 标记已编辑 + 首次编辑时留档原始内容
+    const syncCloudEdit = (id, newHtml, oldHtml, guestAuthor) => {
+      const client = ensureOwnerClient();
+      if (!client) return; // 未开管理模式 → 仅本机生效
+      (async () => {
+        const { data: row } = await client.from("mindsets")
+          .select("original_content").eq("id", id).maybeSingle();
+        const payload = { content: newHtml, edited: true,
+          original_content: (row && row.original_content) || oldHtml };
+        if (guestAuthor) payload.author = guestAuthor;
+        const { data: rows, error } = await client.from("mindsets")
+          .update(payload).eq("id", id).select();
+        if (error) console.warn("云端编辑失败：", error.message);
+        else if (!rows || rows.length === 0) console.warn("云端编辑未生效（管理口令可能不正确）");
+      })();
+    };
+
     // 保存编辑
     const saveEdit = () => {
       if (!editingMindsetId) return;
       const newHtml = escapeHtml(modalContent.value.trim()).replace(/\n/g, "<br>");
       if (!newHtml) return;
 
+      const oldHtml = (getAllMindsets().find(m => m.id === editingMindsetId) || {}).html || newHtml;
+      const guestAuthor = modalAuthorRow && !modalAuthorRow.hidden
+        ? (modalAuthor.value.trim() || "神秘访客") : null;
+
       const overrides = getMindsetOverrides();
       const editData = { html: newHtml };
-      if (modalAuthorRow && !modalAuthorRow.hidden) {
-        editData.author = modalAuthor.value.trim() || "神秘访客";
-      }
+      if (guestAuthor) editData.author = guestAuthor;
       overrides[editingMindsetId] = editData;
       saveMindsetOverrides(overrides);
+
+      syncCloudEdit(editingMindsetId, newHtml, oldHtml, guestAuthor);
 
       closeEditModal();
       refreshMindsetViews();
@@ -611,13 +667,19 @@ let lastY = window.scrollY, lastBubbleAt = 0;
       if (modalAuthor) modalAuthor.value = "";
     };
 
-    // 删除心法（云端同步删除；匿名无删除权限时仅本页隐藏，可在 Supabase 后台彻底删除）
+    // 删除心法（软删除：云端 deleted=true，库里保留但网页不再显示）
     const deleteMindset = (id) => {
       const overrides = getMindsetOverrides();
       overrides[id + "_deleted"] = true;
       saveMindsetOverrides(overrides);
-      if (sb) sb.from("mindsets").delete().eq("id", id)
-        .then(({ error }) => { if (error) console.warn("云端删除受限（已仅本页隐藏）：", error.message); });
+      const client = ensureOwnerClient();
+      if (client) {
+        client.from("mindsets").update({ deleted: true }).eq("id", id).select()
+          .then(({ data: rows, error }) => {
+            if (error) console.warn("云端删除失败：", error.message);
+            else if (!rows || rows.length === 0) console.warn("云端删除未生效（口令可能不对或该条不在云端），已仅本页隐藏");
+          });
+      }
 
       refreshMindsetViews();
 
@@ -631,8 +693,18 @@ let lastY = window.scrollY, lastBubbleAt = 0;
       }
     };
 
-    // 切换管理模式
+    // 切换管理模式（开启时需设置/输入管理口令，用于云端编辑删除鉴权）
     const toggleOwnerMode = () => {
+      if (!isOwnerMode && sb) {
+        let token = getOwnerToken();
+        if (!token) {
+          token = (prompt("请设置管理口令（云端编辑/删除的鉴权凭证，请牢记）：") || "").trim();
+          if (!token) return; // 取消 → 不开启
+          sessionStorage.setItem("yiyang_owner_token", token);
+        }
+        ensureOwnerClient();
+        seedCoreMindsetsToCloud();
+      }
       isOwnerMode = !isOwnerMode;
       document.body.classList.toggle("body-owner-mode", isOwnerMode);
       if (ownerModeBtn) {
