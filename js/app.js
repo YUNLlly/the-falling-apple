@@ -188,7 +188,6 @@ let lastY = window.scrollY, lastBubbleAt = 0;
   const INSPIRATION_QUOTES = [
     "被砸中是运气，接得住是本事。",
     "把每个负向实验都追到归因为止。",
-    "先上线，再完美。",
     "数据不会说谎，但要学会提问。",
     "AI 是杠杆，产品人是支点。",
     "会讲故事的数据，更有说服力。",
