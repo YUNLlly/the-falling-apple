@@ -67,6 +67,9 @@
   const tabPanels = $$(".cici-panel");
   tabBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
+      const bar = $(".cici-tab-bar");
+      // 记录切换前 tab 栏是否吸顶中：短面板切换会让页面高度塌缩、滚动位置被浏览器夹到后方区块，需重新对齐
+      const wasStuck = bar && bar.getBoundingClientRect().top <= 1;
       const targetId = btn.dataset.tab;
       tabBtns.forEach((b) => b.classList.remove("active"));
       tabPanels.forEach((p) => p.classList.remove("active"));
@@ -76,6 +79,12 @@
         targetPanel.classList.add("active");
         if (hasGsap && window.ScrollTrigger) {
           ScrollTrigger.refresh();
+        }
+        // 吸顶状态下切换：把滚动位置重新锚定到 tab 栏吸顶点，避免跳到后方区块
+        if (wasStuck && bar) {
+          const y = bar.getBoundingClientRect().top + window.scrollY;
+          if (typeof lenis !== "undefined" && lenis) lenis.scrollTo(y, { immediate: true });
+          else window.scrollTo(0, y);
         }
       }
     });
